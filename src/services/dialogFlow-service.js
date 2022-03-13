@@ -1,11 +1,11 @@
-const dialogFlow = require('@google-cloud/dialogflow');
+const dialogFlow = require("@google-cloud/dialogflow");
 
-const uuid = require('uuid');
+const uuid = require("uuid");
 
-const { project_id } = require('../../keyFile.json');
+const { project_id } = require("../../keyFile.json");
 
 const sessionClient = new dialogFlow.SessionsClient({
-    keyFilename: 'keyFile.json',
+    keyFilename: "keyFile.json",
 });
 
 const sessionId = uuid.v4();
@@ -22,7 +22,7 @@ module.exports = {
             queryInput: {
                 text: {
                     text: msg,
-                    languageCode: 'en-US',
+                    languageCode: "en-US",
                 },
             },
         };
@@ -31,7 +31,7 @@ module.exports = {
         if (result.intent) {
             return result.fulfillmentText;
         } else {
-            return 'Something went Wrong';
+            return "Something went Wrong";
         }
     },
 };

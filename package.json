@@ -4,10 +4,14 @@
     "description": "bot for time pass",
     "main": "src/app.js",
     "scripts": {
-        "start": "node src/app",
+        "bot": "node src/bot",
+        "bot:dev": "nodemon src/bot",
+        "prebot:dev": "sh bin/pre-run.sh",
+        "prebot": "sh bin/pre-run.sh",
+        "server": "node src/app",
+        "server:dev": "nodemon src/app",
         "lint": "eslint . --ext .js",
         "lint:fix": "npm run lint -- --fix",
-        "dev": "nodemon src/app",
         "prettier": "prettier --check .",
         "prettier:write": "prettier --write ."
     },
@@ -15,8 +19,17 @@
     "license": "MIT",
     "dependencies": {
         "@google-cloud/dialogflow": "^4.5.0",
+        "convict": "^6.2.1",
+        "convict-format-with-validator": "^6.2.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.3",
+        "helmet": "^5.0.2",
+        "http-status-codes": "^2.2.0",
+        "morgan": "^1.10.0",
         "telebot": "^1.4.1",
-        "uuid": "^8.3.2"
+        "uuid": "^8.3.2",
+        "winston": "^3.6.0",
+        "ytdl-core": "^4.11.0"
     },
     "devDependencies": {
         "eslint": "^7.23.0",

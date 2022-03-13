@@ -1,40 +1,24 @@
-const TeleBot = require('telebot');
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const path = require("path");
 
-const controller = require('./controllers/bot-controller');
+const { config, logger, morganOption } = require("./config");
 
-const token = process.env.TOKEN;
+const port = config.get("app.port");
+const app = express();
 
-const bot = new TeleBot(token);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-bot.on('inlineQuery', async (msg) => {
-    const answers = bot.answerList(msg.id, { cacheTime: 60 });
-    const response = await controller.handleQuery(msg.query, answers);
-    return bot.answerQuery(response);
+app.use(cors());
+app.use(helmet());
+app.use(morgan("combined", morganOption));
+
+// routes
+app.use("/files", express.static(path.join(__dirname , "../files")));
+
+app.listen(port, () => {
+    logger.info(`App listening at http://localhost:${port}`);
 });
-
-bot.on(['*', '/*'], async (msg, self) => {
-    if (self.type == 'text') {
-        return await controller.handleText(msg);
-    } else if (self.type == 'command') {
-        return await controller.handleCommand(msg);
-    }
-});
-
-bot.on('sticker', (msg) => {
-    return msg.reply.sticker('http://i.imgur.com/VRYdhuD.png', {
-        asReply: true,
-    });
-});
-
-bot.on('edit', (msg) => {
-    return msg.reply.text(`Entha monuse edit cheyithathu`);
-});
-
-bot.on('newChatMembers', (msg) => {
-    return msg.reply.text(
-        `Hii <b>${msg.new_chat_member.first_name}</b> Welcome! to <b>${msg.chat.title}</b> `,
-        { parseMode: 'html' }
-    );
-});
-
-bot.start();
