@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(morgan("combined", morganOption));
 
 // routes
-app.use("/files", express.static(path.join(__dirname , "../files")));
+app.use("/files", express.static(path.join(__dirname, "../files")));
 
 app.listen(port, () => {
     logger.info(`App listening at http://localhost:${port}`);

@@ -8,7 +8,6 @@ module.exports = {
     },
 
     handleCommand: async (msg, handleReply) => {
-        console.log(msg);
         if (msg.text == "/start" || msg.text == "/hello") {
             const text = `Hii <b>${
                 msg.from.first_name ?? msg.from.first_name
@@ -22,7 +21,7 @@ module.exports = {
                 });
             }
             return handleReply("document", msg.chat, {
-                url: await youtubeService.download(url),
+                url: await youtubeService.getVideo(url),
             });
         } else {
             // let replyToMessage = msg.message_id;

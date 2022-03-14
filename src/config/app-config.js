@@ -9,12 +9,6 @@ const schema = {
             default: 4000,
             env: "PORT",
         },
-        url: {
-            doc: "The url to bind",
-            format: "url",
-            default: "http://localhost:4000",
-            env: "APP_URL",
-        },
     },
     bot: {
         token: {
@@ -29,6 +23,26 @@ const schema = {
         format: ["dev", "prod"],
         default: "dev",
         env: "NODE_ENV",
+    },
+    aws: {
+        accessKeyId: {
+            doc: "The aws access key id",
+            format: String,
+            default: "accessKeyId is not provided",
+            env: "AWS_ACCESS_KEY_ID",
+        },
+        secretAccessKey: {
+            doc: "The aws secret access key",
+            format: String,
+            default: "secretAccessKey is not provided",
+            env: "AWS_SECRET_ACCESS_KEY",
+        },
+        bucket: {
+            doc: "The aws bucket",
+            format: String,
+            default: "bot--storage",
+            env: "AWS_BUCKET",
+        },
     },
 };
 

@@ -6,8 +6,6 @@
     "scripts": {
         "bot": "node src/bot",
         "bot:dev": "nodemon src/bot",
-        "prebot:dev": "sh bin/pre-run.sh",
-        "prebot": "sh bin/pre-run.sh",
         "server": "node src/app",
         "server:dev": "nodemon src/app",
         "lint": "eslint . --ext .js",
@@ -19,6 +17,7 @@
     "license": "MIT",
     "dependencies": {
         "@google-cloud/dialogflow": "^4.5.0",
+        "aws-sdk": "^2.1092.0",
         "convict": "^6.2.1",
         "convict-format-with-validator": "^6.2.0",
         "cors": "^2.8.5",
