@@ -9,11 +9,11 @@ const s3 = new AWS.S3({
 });
 
 module.exports = {
-    uploadFile: async (buffer, extension) => {
+    uploadFile: async (buffer, extension, name) => {
         return new Promise((resolve, reject) => {
             const params = {
                 Bucket: config.get("aws.bucket"),
-                Key: `${v4()}.${extension}`,
+                Key: name ? name : `${v4()}.${extension}`,
                 ACL: "public-read",
                 Body: buffer,
             };

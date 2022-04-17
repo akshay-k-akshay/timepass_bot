@@ -1,5 +1,6 @@
 const dialogFlowService = require("../services/dialogFlow-service");
 const youtubeService = require("../services/youtube");
+const torrentService = require("../services/torrent.js");
 
 module.exports = {
     handleText: async (msg) => {
@@ -9,11 +10,12 @@ module.exports = {
 
     handleCommand: async (msg, handleReply) => {
         if (msg.text == "/start" || msg.text == "/hello") {
-            const text = `Hii <b>${
-                msg.from.first_name ?? msg.from.first_name
-            } ${msg.from.last_name ?? ""}</b>. Welcome! to <b>Timepass bot</b>`;
+            const text = `Hii <b>${msg.from.first_name} ${
+                msg.from.last_name ?? ""
+            }</b>. Welcome! to <b>Timepass bot</b>`;
             return handleReply("text", msg.chat, { text });
-        } else if (msg.text.includes("/youtube")) {
+        }
+        if (msg.text.includes("/youtube")) {
             const url = msg.text.split(" ")[1];
             if (!url) {
                 return handleReply("text", msg.chat, {
@@ -23,13 +25,26 @@ module.exports = {
             return handleReply("document", msg.chat, {
                 url: await youtubeService.getVideo(url),
             });
-        } else {
-            // let replyToMessage = msg.message_id;
+        }
 
+        if (msg.text.includes("/torrent")) {
+            const magnetURI = msg.text.split(" ")[1];
+            if (!magnetURI) {
+                return handleReply("text", msg.chat, {
+                    text: "Please provide a torrent url",
+                });
+            }
+            handleReply("text", msg.chat, {
+                text: "Downloading torrent file...",
+            });
             return handleReply("text", msg.chat, {
-                text: "This is a <b>command</b> message.",
+                text: await torrentService.getFile(magnetURI),
             });
         }
+
+        return handleReply("text", msg.chat, {
+            text: "This command is not supported",
+        });
     },
 
     handleQuery: async (query, answers) => {

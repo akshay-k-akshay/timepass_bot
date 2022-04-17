@@ -37,7 +37,8 @@ bot.on("inlineQuery", async (msg) => {
 bot.on(["*", "/*"], async (msg, self) => {
     if (self.type == "text") {
         return await controller.handleText(msg, handleReply);
-    } else if (self.type == "command") {
+    }
+    if (self.type == "command") {
         return await controller.handleCommand(msg, handleReply);
     }
 });
