@@ -49,9 +49,9 @@ bot.on("sticker", (msg) => {
     });
 });
 
-bot.on("edit", (msg) => {
-    return msg.reply.text(`Entha monuse edit cheyithathu`);
-});
+// bot.on("edit", (msg) => {
+//     return msg.reply.text(`Entha monuse edit cheyithathu`);
+// });
 
 bot.on("newChatMembers", (msg) => {
     return msg.reply.text(

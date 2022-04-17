@@ -9,11 +9,16 @@ const zip = new AdmZip();
 
 module.exports = {
     getFile: async (magnetURI) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             client.add(magnetURI, async (torrent) => {
                 if (torrent.files.length == 0) {
-                    return reject("No files found");
+                    return resolve("No files found. Please send a valid magnet URI");
                 }
+                const maxLimit = 3 * 1024 * 1024 * 1024; // 3GB file limit in bytes
+                if (torrent.length > maxLimit) {
+                    return resolve("File size is too large. Max file size is <b>3GB</b>");
+                }
+
                 await Promise.all(
                     torrent.files.map(async (file) => {
                         const reader = file.createReadStream();
